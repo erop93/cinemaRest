@@ -10,11 +10,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Репозиторий для сущности Actor с реализацией CRUD методов.
+ */
 public class ActorRepository {
 
-    public List<Actor> getAllActors() {
+    /**
+     * Метод для получения всех актеров.
+     *
+     * @return возвращает список всех актеров.
+     */
+    public List<Actor> getAllActors() throws SQLException {
         List<Actor> actors = new ArrayList<>();
-
         String query = "SELECT * FROM actors";
 
         try (Connection connection = DbConnection.getConnection();
@@ -27,28 +34,19 @@ public class ActorRepository {
                 Actor actor = new Actor(actorId, actorName);
                 actors.add(actor);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return actors;
     }
 
-    public void addActor(Actor actor) {
-        String query = "INSERT INTO actors (actor_name) VALUES(?)";
-
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, actor.getActorName());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Actor getActorById(int actorId) {
-        String query = "SELECT * FROM actors WHERE actor_id = ?";
-
+    /**
+     * Метод для получения актера по его id.
+     *
+     * @param actorId - id актера.
+     * @return возвращает актера
+     */
+    public Actor getActorById(int actorId) throws SQLException {
         Actor actor = null;
+        String query = "SELECT * FROM actors WHERE actor_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -59,13 +57,31 @@ public class ActorRepository {
                 String actorName = resultSet.getString("actor_name");
                 actor = new Actor(actorId, actorName);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return actor;
     }
 
-    public void updateActor(Actor actor) {
+    /**
+     * Метод для добавления актера.
+     *
+     * @param actor - актер
+     */
+    public void addActor(Actor actor) throws SQLException {
+        String query = "INSERT INTO actors (actor_name) VALUES(?)";
+
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, actor.getActorName());
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    /**
+     * Метод для обновления имени актера.
+     *
+     * @param actor - актер
+     */
+    public void updateActor(Actor actor) throws SQLException {
         String query = "UPDATE actors SET actor_name = ? WHERE actor_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
@@ -74,21 +90,21 @@ public class ActorRepository {
             preparedStatement.setString(1, actor.getActorName());
             preparedStatement.setInt(2, actor.getActorId());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
-    public void deleteActor(int actorId) {
+    /**
+     * Метод для удаления актера.
+     *
+     * @param actorId - id актера.
+     */
+    public void deleteActor(int actorId) throws SQLException {
         String query = "DELETE FROM actors WHERE actor_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, actorId);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
-
 }
