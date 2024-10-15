@@ -1,7 +1,7 @@
 package servlet;
 
 import entity.Actor;
-import repository.ActorRepository;
+import repository.ActorDAO;
 import service.ActorService;
 
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ public class ActorServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        actorService = new ActorService(new ActorRepository());
+        actorService = new ActorService(new ActorDAO());
     }
 
     /**

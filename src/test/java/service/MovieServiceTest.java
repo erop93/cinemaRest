@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import repository.MovieRepository;
+import repository.MovieDAO;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 class MovieServiceTest {
 
     @Mock
-    private MovieRepository movieRepository;
+    private MovieDAO movieDAO;
 
     @InjectMocks
     private MovieService movieService;
@@ -37,11 +37,11 @@ class MovieServiceTest {
              new Movie(2, "Interstellar", genre)
         );
 
-        when(movieRepository.getAllMovies()).thenReturn(movies);
+        when(movieDAO.getAllMovies()).thenReturn(movies);
 
         List<Movie> result = movieService.getAllMovies();
         assertEquals(2, result.size());
-        verify(movieRepository, times(1)).getAllMovies();
+        verify(movieDAO, times(1)).getAllMovies();
     }
 
     @Test
@@ -50,7 +50,7 @@ class MovieServiceTest {
         Movie movie = new Movie(1, "Forrest Gump", genre);
 
         movieService.addMovie(movie);
-        verify(movieRepository, times(1)).addMovie(movie);
+        verify(movieDAO, times(1)).addMovie(movie);
     }
 
     @Test
@@ -59,7 +59,7 @@ class MovieServiceTest {
         Movie movie = new Movie(1, "Forrest Gump", genre);
 
         movieService.updateMovie(movie);
-        verify(movieRepository, times(1)).updateMovie(movie);
+        verify(movieDAO, times(1)).updateMovie(movie);
     }
 
     @Test
@@ -67,6 +67,6 @@ class MovieServiceTest {
         int movieId = 1;
 
         movieService.deleteMovie(movieId);
-        verify(movieRepository, times(1)).deleteMovie(movieId);
+        verify(movieDAO, times(1)).deleteMovie(movieId);
     }
 }

@@ -2,8 +2,8 @@ package servlet;
 
 import entity.Genre;
 import entity.Movie;
-import repository.GenreRepository;
-import repository.MovieRepository;
+import repository.GenreDAO;
+import repository.MovieDAO;
 import service.MovieService;
 
 import javax.servlet.ServletException;
@@ -26,7 +26,7 @@ public class MovieServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        movieService = new MovieService(new MovieRepository());
+        movieService = new MovieService(new MovieDAO());
     }
 
     /**
@@ -96,7 +96,7 @@ public class MovieServlet extends HttpServlet {
         int genreId = Integer.parseInt(req.getParameter("genreId"));
 
         try {
-            Genre genre = new GenreRepository().getGenreById(genreId);
+            Genre genre = new GenreDAO().getGenreById(genreId);
             Movie movie = new Movie(0, movieName, genre);
             movieService.addMovie(movie);
             resp.setStatus(HttpServletResponse.SC_CREATED);
@@ -123,7 +123,7 @@ public class MovieServlet extends HttpServlet {
         int genreId = Integer.parseInt(req.getParameter("genreId"));
 
         try {
-            Genre genre = new GenreRepository().getGenreById(genreId);
+            Genre genre = new GenreDAO().getGenreById(genreId);
             Movie movie = new Movie(movieId, movieName, genre);
             movieService.updateMovie(movie);
             resp.setStatus(HttpServletResponse.SC_OK);

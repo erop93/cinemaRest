@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Репозиторий для сущности Actor с реализацией CRUD методов.
  */
-public class ActorRepository {
+public class ActorDAO {
 
     /**
      * Метод для получения всех актеров.

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Репозиторий для сущности Movie с реализацией CRUD методов.
  */
-public class MovieRepository {
+public class MovieDAO {
 
     /**
      * Метод для получения всех фильмов.
@@ -31,7 +31,7 @@ public class MovieRepository {
                 int movieId = resultSet.getInt("movie_id");
                 String movieName = resultSet.getString("movie_name");
                 int genreId = resultSet.getInt("genre_id");
-                Genre genre = new GenreRepository().getGenreById(genreId);
+                Genre genre = new GenreDAO().getGenreById(genreId);
                 Movie movie = new Movie(movieId, movieName, genre);
 
                 List<Actor> actors = getActorsForMovie(movieId);
@@ -61,7 +61,7 @@ public class MovieRepository {
             if (resultSet.next()) {
                 String movieName = resultSet.getString("movie_name");
                 int genreId = resultSet.getInt("genre_id");
-                Genre genre = new GenreRepository().getGenreById(genreId);
+                Genre genre = new GenreDAO().getGenreById(genreId);
 
                 movie = new Movie(movieId, movieName, genre);
 

@@ -1,7 +1,7 @@
 package service;
 
 import entity.Genre;
-import repository.GenreRepository;
+import repository.GenreDAO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,29 +11,29 @@ import java.util.List;
  */
 public class GenreService {
 
-    private final GenreRepository genreRepository;
+    private final GenreDAO genreDAO;
 
-    public GenreService(GenreRepository genreRepository) {
-        this.genreRepository = genreRepository;
+    public GenreService(GenreDAO genreDAO) {
+        this.genreDAO = genreDAO;
     }
 
     public List<Genre> getAllGenres() throws SQLException {
-        return genreRepository.getAllGenres();
+        return genreDAO.getAllGenres();
     }
 
     public Genre getGenreById(int genreId) throws SQLException {
-        return genreRepository.getGenreById(genreId);
+        return genreDAO.getGenreById(genreId);
     }
 
     public void addGenre(Genre genre) throws SQLException {
-        genreRepository.addGenre(genre);
+        genreDAO.addGenre(genre);
     }
 
     public void updateGenre(Genre genre) throws SQLException {
-        genreRepository.updateGenre(genre);
+        genreDAO.updateGenre(genre);
     }
 
     public void deleteGenre(int genreId) throws SQLException {
-        genreRepository.deleteGenre(genreId);
+        genreDAO.deleteGenre(genreId);
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Репозиторий для сущности Genre с реализацией CRUD методов.
  */
-public class GenreRepository {
+public class GenreDAO {
 
     /**
      * Метод для получения всех жанров.

@@ -8,41 +8,41 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ActorRepositoryTest extends TestContainersTest {
+public class ActorDAOTest extends TestContainersTest {
 
-    private ActorRepository actorRepository = new ActorRepository();
+    private ActorDAO actorDAO = new ActorDAO();
 
     @Test
     void getAllActorsTest() throws SQLException {
-        actorRepository.addActor(new Actor(0,"Leonardo DiCaprio"));
-        actorRepository.addActor(new Actor(0, "Bruce Willis"));
-        List<Actor> actors = actorRepository.getAllActors();
+        actorDAO.addActor(new Actor(0,"Leonardo DiCaprio"));
+        actorDAO.addActor(new Actor(0, "Bruce Willis"));
+        List<Actor> actors = actorDAO.getAllActors();
         assertEquals(2, actors.size());
     }
 
     @Test
     void addActorTest() throws SQLException {
         Actor actor = new Actor(0, "Leonardo DiCaprio");
-        actorRepository.addActor(actor);
-        assertNotNull(actorRepository.getActorById(actor.getActorId()));
+        actorDAO.addActor(actor);
+        assertNotNull(actorDAO.getActorById(actor.getActorId()));
     }
 
     @Test
     void updateActorTest() throws SQLException {
         Actor actor = new Actor(0, "Leonardo DiCaprio");
-        actorRepository.addActor(actor);
+        actorDAO.addActor(actor);
         actor.setActorName("Updated Name");
-        actorRepository.updateActor(actor);
+        actorDAO.updateActor(actor);
 
-        Actor updatedActor = actorRepository.getActorById(actor.getActorId());
+        Actor updatedActor = actorDAO.getActorById(actor.getActorId());
         assertEquals("Updated Name", updatedActor.getActorName());
     }
 
     @Test
     void deleteActorTest() throws SQLException {
         Actor actor = new Actor(0, "Leonardo DiCaprio");
-        actorRepository.addActor(actor);
-        actorRepository.deleteActor(actor.getActorId());
-        assertNull(actorRepository.getActorById(actor.getActorId()));
+        actorDAO.addActor(actor);
+        actorDAO.deleteActor(actor.getActorId());
+        assertNull(actorDAO.getActorById(actor.getActorId()));
     }
 }

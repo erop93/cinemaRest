@@ -1,7 +1,7 @@
 package service;
 
 import entity.Movie;
-import repository.MovieRepository;
+import repository.MovieDAO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,29 +11,29 @@ import java.util.List;
  */
 public class MovieService {
 
-    private final MovieRepository movieRepository;
+    private final MovieDAO movieDAO;
 
-    public MovieService(MovieRepository movieRepository) {
-        this.movieRepository = movieRepository;
+    public MovieService(MovieDAO movieDAO) {
+        this.movieDAO = movieDAO;
     }
 
     public List<Movie> getAllMovies() throws SQLException {
-        return movieRepository.getAllMovies();
+        return movieDAO.getAllMovies();
     }
 
     public Movie getMovieById(int movieId) throws SQLException {
-        return movieRepository.getMovieById(movieId);
+        return movieDAO.getMovieById(movieId);
     }
 
     public void addMovie(Movie movie) throws SQLException {
-        movieRepository.addMovie(movie);
+        movieDAO.addMovie(movie);
     }
 
     public void updateMovie(Movie movie) throws SQLException {
-        movieRepository.updateMovie(movie);
+        movieDAO.updateMovie(movie);
     }
 
     public void deleteMovie(int movieId) throws SQLException {
-        movieRepository.deleteMovie(movieId);
+        movieDAO.deleteMovie(movieId);
     }
 }

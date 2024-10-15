@@ -1,7 +1,7 @@
 package servlet;
 
 import entity.Genre;
-import repository.GenreRepository;
+import repository.GenreDAO;
 import service.GenreService;
 
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ public class GenreServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        genreService = new GenreService(new GenreRepository());
+        genreService = new GenreService(new GenreDAO());
     }
 
     /**
