@@ -67,12 +67,16 @@ public class ActorRepository {
      * @param actor - актер
      */
     public void addActor(Actor actor) throws SQLException {
-        String query = "INSERT INTO actors (actor_name) VALUES(?)";
+        String query = "INSERT INTO actors (actor_name) VALUES(?) RETURNING actor_id";
 
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, actor.getActorName());
-            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int generatedId = resultSet.getInt(1);
+                actor.setActorId(generatedId);
+            }
         }
     }
 

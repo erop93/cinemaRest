@@ -1,6 +1,7 @@
 package servlet;
 
 import entity.Actor;
+import repository.ActorRepository;
 import service.ActorService;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,12 @@ import java.util.List;
  */
 @WebServlet("/actors")
 public class ActorServlet extends HttpServlet {
-    private ActorService actorService = new ActorService();
+    private ActorService actorService;
+
+    @Override
+    public void init() throws ServletException {
+        actorService = new ActorService(new ActorRepository());
+    }
 
     /**
      * Метод для получения актеров.
@@ -33,7 +39,7 @@ public class ActorServlet extends HttpServlet {
      *             to the client
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String idParam = req.getParameter("id");
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
@@ -82,7 +88,7 @@ public class ActorServlet extends HttpServlet {
      *             to the client
      */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String actorName = req.getParameter("actorName");
 
         try {
@@ -106,7 +112,7 @@ public class ActorServlet extends HttpServlet {
      *             to the client
      */
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         int actorId = Integer.parseInt(req.getParameter("id"));
         String actorName = req.getParameter("actorName");
 
@@ -131,12 +137,21 @@ public class ActorServlet extends HttpServlet {
      *             to the client
      */
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int actorId = Integer.parseInt(req.getParameter("actorId"));
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String actorIdParam = req.getParameter("actorId");
 
+        if (actorIdParam == null || actorIdParam.isEmpty()) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            resp.getWriter().write("{\"error\": \"Invalid or missing 'actorId' parameter\"}");
+            return;
+        }
         try {
+            int actorId = Integer.parseInt(actorIdParam);
             actorService.deleteActorById(actorId);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        } catch (NumberFormatException e) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            resp.getWriter().write("{\"error\": \"Invalid 'actorId' parameter\"}");
         } catch (Exception e) {
             e.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

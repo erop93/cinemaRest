@@ -11,7 +11,11 @@ import java.util.List;
  */
 public class GenreService {
 
-    private final GenreRepository genreRepository = new GenreRepository();
+    private final GenreRepository genreRepository;
+
+    public GenreService(GenreRepository genreRepository) {
+        this.genreRepository = genreRepository;
+    }
 
     public List<Genre> getAllGenres() throws SQLException {
         return genreRepository.getAllGenres();

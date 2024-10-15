@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,12 +14,13 @@ public class Movie {
     private int movieId;
     private String movieName;
     private Genre genre;
-    private List<Actor> actors;
+    private List<Actor> actors = new ArrayList<>();
 
     public Movie(int movieId, String movieName, Genre genre) {
         this.movieId = movieId;
         this.movieName = movieName;
         this.genre = genre;
+        this.actors = new ArrayList<>();
     }
 
     public Movie() {}

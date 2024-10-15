@@ -1,6 +1,7 @@
 package servlet;
 
 import entity.Genre;
+import repository.GenreRepository;
 import service.GenreService;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,12 @@ import java.util.List;
  */
 @WebServlet("/genres")
 public class GenreServlet extends HttpServlet {
-    private GenreService genreService = new GenreService();
+    private GenreService genreService;
+
+    @Override
+    public void init() throws ServletException {
+        genreService = new GenreService(new GenreRepository());
+    }
 
     /**
      * Метод для получения жанров.

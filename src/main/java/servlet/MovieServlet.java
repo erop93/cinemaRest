@@ -3,6 +3,7 @@ package servlet;
 import entity.Genre;
 import entity.Movie;
 import repository.GenreRepository;
+import repository.MovieRepository;
 import service.MovieService;
 
 import javax.servlet.ServletException;
@@ -21,7 +22,12 @@ import java.util.List;
  */
 @WebServlet("/movies")
 public class MovieServlet extends HttpServlet {
-    private MovieService movieService = new MovieService();
+    private MovieService movieService;
+
+    @Override
+    public void init() throws ServletException {
+        movieService = new MovieService(new MovieRepository());
+    }
 
     /**
      * Метод для получения фильмов.

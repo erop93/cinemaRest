@@ -68,13 +68,17 @@ public class GenreRepository {
      * @param genre - жанр.
      */
     public void addGenre(Genre genre) throws SQLException {
-        String query = "INSERT INTO genres (genre_name) VALUES (?)";
+        String query = "INSERT INTO genres (genre_name) VALUES (?) RETURNING genre_id";
 
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, genre.getGenreName());
-            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int generatedId = resultSet.getInt(1);
+                genre.setGenreId(generatedId);
+            }
         }
     }
 
