@@ -1,0 +1,12 @@
+# Complied class file
+*.class
+
+# Package files
+*.jar
+*.war
+*.zip
+*.rar
+*.nar
+
+/target/
+/.idea/

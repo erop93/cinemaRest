@@ -22,7 +22,7 @@ public class ActorServlet extends HttpServlet {
     private ActorService actorService;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         actorService = new ActorService(new ActorDAO());
     }
 

@@ -17,23 +17,23 @@ public class GenreService {
         this.genreDAO = genreDAO;
     }
 
-    public List<Genre> getAllGenres() throws SQLException {
+    public List<Genre> getAllGenres() {
         return genreDAO.getAllGenres();
     }
 
-    public Genre getGenreById(int genreId) throws SQLException {
+    public Genre getGenreById(int genreId) {
         return genreDAO.getGenreById(genreId);
     }
 
-    public void addGenre(Genre genre) throws SQLException {
+    public void addGenre(Genre genre) {
         genreDAO.addGenre(genre);
     }
 
-    public void updateGenre(Genre genre) throws SQLException {
+    public void updateGenre(Genre genre) {
         genreDAO.updateGenre(genre);
     }
 
-    public void deleteGenre(int genreId) throws SQLException {
+    public void deleteGenre(int genreId) {
         genreDAO.deleteGenre(genreId);
     }
 }

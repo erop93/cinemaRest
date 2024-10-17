@@ -39,7 +39,7 @@ public class GenreServlet extends HttpServlet {
      *             to the client
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String idParam = req.getParameter("id");
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
@@ -88,7 +88,7 @@ public class GenreServlet extends HttpServlet {
      *             to the client
      */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String genreName = req.getParameter("genreName");
 
         try {
@@ -112,7 +112,7 @@ public class GenreServlet extends HttpServlet {
      *             to the client
      */
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         int genreId = Integer.parseInt(req.getParameter("id"));
         String genreName = req.getParameter("genreName");
 
@@ -137,7 +137,7 @@ public class GenreServlet extends HttpServlet {
      *             to the client
      */
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         int genreId = Integer.parseInt(req.getParameter("id"));
 
         try {

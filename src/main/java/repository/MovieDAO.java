@@ -19,7 +19,7 @@ public class MovieDAO {
      *
      * @return возвращает список всех фильмов.
      */
-    public List<Movie> getAllMovies() throws SQLException {
+    public List<Movie> getAllMovies() {
         List<Movie> movies = new ArrayList<>();
         String query = "SELECT * FROM movies";
 
@@ -38,6 +38,9 @@ public class MovieDAO {
                 movie.setActors(actors);
                 movies.add(movie);
             }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
         return movies;
     }
@@ -48,7 +51,7 @@ public class MovieDAO {
      * @param movieId - id фильма.
      * @return возвращает фильм
      */
-    public Movie getMovieById(int movieId) throws SQLException {
+    public Movie getMovieById(int movieId) {
         Movie movie = null;
         String query = "SELECT * FROM movies WHERE movie_id = ?";
 
@@ -68,6 +71,9 @@ public class MovieDAO {
                 List<Actor> actors = getActorsForMovie(movieId);
                 movie.setActors(actors);
             }
+        }  catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
         return movie;
     }
@@ -76,7 +82,7 @@ public class MovieDAO {
      * Метод для добавления фильма.
      * @param movie - фильм
      */
-    public void addMovie(Movie movie) throws SQLException {
+    public void addMovie(Movie movie) {
         String query = "INSERT INTO movies (movie_name, genre_id) VALUES (?, ?)";
 
         try (Connection connection = DbConnection.getConnection();
@@ -91,6 +97,9 @@ public class MovieDAO {
                 movie.setMovieId(resultSet.getInt(1));
             }
             addActorsForMovie(movie.getMovieId(), movie.getActors());
+        }  catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
     }
 
@@ -98,7 +107,7 @@ public class MovieDAO {
      * Метод для обновления данных фильма - названия и жанра.
      * @param movie - фильм.
      */
-    public void updateMovie(Movie movie) throws SQLException {
+    public void updateMovie(Movie movie) {
         String query = "UPDATE movies SET movie_name = ?, genre_id = ? WHERE movie_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
@@ -111,6 +120,9 @@ public class MovieDAO {
 
             deleteActorsForMovie(movie.getMovieId());
             addActorsForMovie(movie.getMovieId(), movie.getActors());
+        }  catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
     }
 
@@ -119,7 +131,7 @@ public class MovieDAO {
      * Сначала удаляем связи актеров с фильмом с помощью метода deleteActorsForMovie, а затем и сам фильм.
      * @param movieId - id фильма
      */
-    public void deleteMovie(int movieId) throws SQLException {
+    public void deleteMovie(int movieId) {
         deleteActorsForMovie(movieId);
         String query = "DELETE FROM movies WHERE movie_id = ?";
 
@@ -128,6 +140,9 @@ public class MovieDAO {
 
             preparedStatement.setInt(1, movieId);
             preparedStatement.executeUpdate();
+        }  catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
     }
 
@@ -136,7 +151,7 @@ public class MovieDAO {
      * @param movieId - id фильма
      * @return возвращает список актеров
      */
-    private List<Actor> getActorsForMovie(int movieId) throws SQLException {
+    private List<Actor> getActorsForMovie(int movieId) {
         List<Actor> actors = new ArrayList<>();
         String query = "SELECT a.actor_id, a.actor_name FROM actors a " +
                 "JOIN actor_movies am ON a.actor_id = am.actor_id " +
@@ -152,6 +167,9 @@ public class MovieDAO {
                 String actorName = resultSet.getString("actor_name");
                 actors.add(new Actor(actorId, actorName));
             }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
         return actors;
     }
@@ -161,7 +179,7 @@ public class MovieDAO {
      * @param movieId - id фильма
      * @param actors - список актеров
      */
-    private void addActorsForMovie(int movieId, List<Actor> actors) throws SQLException {
+    private void addActorsForMovie(int movieId, List<Actor> actors) {
         String query = "INSERT INTO actor_movies (actor_id, movie_id) VALUES (?, ?)";
 
         try (Connection connection = DbConnection.getConnection();
@@ -171,6 +189,9 @@ public class MovieDAO {
                 preparedStatement.setInt(2, movieId);
                 preparedStatement.executeUpdate();
             }
+        }  catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
     }
 
@@ -178,13 +199,16 @@ public class MovieDAO {
      * Дополнительный метод для удаления актеров для фильма.
      * @param movieId - id фильма
      */
-    private void deleteActorsForMovie(int movieId) throws SQLException {
+    private void deleteActorsForMovie(int movieId) {
         String query = "DELETE FROM actor_movies WHERE movie_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, movieId);
             preparedStatement.executeUpdate();
+        }  catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
     }
 

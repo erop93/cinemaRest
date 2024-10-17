@@ -20,7 +20,7 @@ public class GenreDAO {
      *
      * @return возвращает список всех жанров.
      */
-    public List<Genre> getAllGenres() throws SQLException {
+    public List<Genre> getAllGenres() {
         List<Genre> genres = new ArrayList<>();
         String query = "SELECT * FROM genres";
 
@@ -34,6 +34,9 @@ public class GenreDAO {
                 Genre genre = new Genre(genreId, genreName);
                 genres.add(genre);
             }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
         return genres;
     }
@@ -44,7 +47,7 @@ public class GenreDAO {
      * @param genreId - id жанра
      * @return возвращает жанр.
      */
-    public Genre getGenreById(int genreId) throws SQLException {
+    public Genre getGenreById(int genreId) {
         Genre genre = null;
         String query = "SELECT * FROM genres WHERE genre_id = ?";
 
@@ -58,6 +61,9 @@ public class GenreDAO {
                 String genreName = resultSet.getString("genre_name");
                 genre = new Genre(genreId, genreName);
             }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
         return genre;
     }
@@ -67,7 +73,7 @@ public class GenreDAO {
      *
      * @param genre - жанр.
      */
-    public void addGenre(Genre genre) throws SQLException {
+    public void addGenre(Genre genre) {
         String query = "INSERT INTO genres (genre_name) VALUES (?) RETURNING genre_id";
 
         try (Connection connection = DbConnection.getConnection();
@@ -79,6 +85,9 @@ public class GenreDAO {
                 int generatedId = resultSet.getInt(1);
                 genre.setGenreId(generatedId);
             }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
     }
 
@@ -87,7 +96,7 @@ public class GenreDAO {
      *
      * @param genre - жанр.
      */
-    public void updateGenre(Genre genre) throws SQLException {
+    public void updateGenre(Genre genre) {
         String query = "UPDATE genres SET genre_name = ? WHERE genre_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
@@ -96,6 +105,9 @@ public class GenreDAO {
             preparedStatement.setString(1, genre.getGenreName());
             preparedStatement.setInt(2, genre.getGenreId());
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
     }
 
@@ -104,7 +116,7 @@ public class GenreDAO {
      *
      * @param genreId - id жанра.
      */
-    public void deleteGenre(int genreId) throws SQLException {
+    public void deleteGenre(int genreId) {
         String query = "DELETE FROM genres WHERE genre_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
@@ -112,6 +124,9 @@ public class GenreDAO {
 
             preparedStatement.setInt(1, genreId);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
     }
 }

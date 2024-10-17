@@ -17,23 +17,23 @@ public class MovieService {
         this.movieDAO = movieDAO;
     }
 
-    public List<Movie> getAllMovies() throws SQLException {
+    public List<Movie> getAllMovies() {
         return movieDAO.getAllMovies();
     }
 
-    public Movie getMovieById(int movieId) throws SQLException {
+    public Movie getMovieById(int movieId) {
         return movieDAO.getMovieById(movieId);
     }
 
-    public void addMovie(Movie movie) throws SQLException {
+    public void addMovie(Movie movie) {
         movieDAO.addMovie(movie);
     }
 
-    public void updateMovie(Movie movie) throws SQLException {
+    public void updateMovie(Movie movie)  {
         movieDAO.updateMovie(movie);
     }
 
-    public void deleteMovie(int movieId) throws SQLException {
+    public void deleteMovie(int movieId) {
         movieDAO.deleteMovie(movieId);
     }
 }

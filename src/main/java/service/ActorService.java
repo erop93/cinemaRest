@@ -17,23 +17,23 @@ public class ActorService {
     }
 
 
-    public List<Actor> getAllActors() throws SQLException {
+    public List<Actor> getAllActors() {
         return actorDAO.getAllActors();
     }
 
-    public Actor getActorById(int actorId) throws SQLException {
+    public Actor getActorById(int actorId) {
         return actorDAO.getActorById(actorId);
     }
 
-    public void addActor(Actor actor) throws SQLException {
+    public void addActor(Actor actor) {
         actorDAO.addActor(actor);
     }
 
-    public void updateActor(Actor actor) throws SQLException {
+    public void updateActor(Actor actor) {
         actorDAO.updateActor(actor);
     }
 
-    public void deleteActorById(int actorId) throws SQLException {
+    public void deleteActorById(int actorId) {
         actorDAO.deleteActor(actorId);
     }
 }

@@ -42,41 +42,31 @@ public class MovieServlet extends HttpServlet {
      *             to the client
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String idParam = req.getParameter("id");
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
 
         if (idParam != null) {
             int movieId = Integer.parseInt(idParam);
-            try {
-                Movie movie = movieService.getMovieById(movieId);
-                if (movie != null) {
-                    out.println("{ \"movieId\": " + movie.getMovieId() + ", \"movieName\": \"" + movie.getMovieName() + "\" }");
-                } else {
-                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    out.println("{\"error\": \"Movie not found\"}");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            Movie movie = movieService.getMovieById(movieId);
+            if (movie != null) {
+                out.println("{ \"movieId\": " + movie.getMovieId() + ", \"movieName\": \"" + movie.getMovieName() + "\" }");
+            } else {
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                out.println("{\"error\": \"Movie not found\"}");
             }
         } else {
-            try {
-                List<Movie> movies = movieService.getAllMovies();
-                out.println("[");
-                for (int i = 0; i < movies.size(); i++) {
-                    Movie movie = movies.get(i);
-                    out.println("{ \"movieId\": " + movie.getMovieId() + ", \"movieName\": \"" + movie.getMovieName() + "\" }");
-                    if (i < movies.size() - 1) {
-                        out.println(",");
-                    }
+            List<Movie> movies = movieService.getAllMovies();
+            out.println("[");
+            for (int i = 0; i < movies.size(); i++) {
+                Movie movie = movies.get(i);
+                out.println("{ \"movieId\": " + movie.getMovieId() + ", \"movieName\": \"" + movie.getMovieName() + "\" }");
+                if (i < movies.size() - 1) {
+                    out.println(",");
                 }
-                out.println("]");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
+            out.println("]");
         }
     }
 
@@ -91,19 +81,14 @@ public class MovieServlet extends HttpServlet {
      *             to the client
      */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String movieName = req.getParameter("movieName");
         int genreId = Integer.parseInt(req.getParameter("genreId"));
 
-        try {
-            Genre genre = new GenreDAO().getGenreById(genreId);
-            Movie movie = new Movie(0, movieName, genre);
-            movieService.addMovie(movie);
-            resp.setStatus(HttpServletResponse.SC_CREATED);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        }
+        Genre genre = new GenreDAO().getGenreById(genreId);
+        Movie movie = new Movie(0, movieName, genre);
+        movieService.addMovie(movie);
+        resp.setStatus(HttpServletResponse.SC_CREATED);
     }
 
     /**
@@ -117,20 +102,15 @@ public class MovieServlet extends HttpServlet {
      *             to the client
      */
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         int movieId = Integer.parseInt(req.getParameter("id"));
         String movieName = req.getParameter("movieName");
         int genreId = Integer.parseInt(req.getParameter("genreId"));
 
-        try {
-            Genre genre = new GenreDAO().getGenreById(genreId);
-            Movie movie = new Movie(movieId, movieName, genre);
-            movieService.updateMovie(movie);
-            resp.setStatus(HttpServletResponse.SC_OK);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        }
+        Genre genre = new GenreDAO().getGenreById(genreId);
+        Movie movie = new Movie(movieId, movieName, genre);
+        movieService.updateMovie(movie);
+        resp.setStatus(HttpServletResponse.SC_OK);
     }
 
     /**
@@ -144,15 +124,10 @@ public class MovieServlet extends HttpServlet {
      *             to the client
      */
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         int movieId = Integer.parseInt(req.getParameter("id"));
 
-        try {
-            movieService.deleteMovie(movieId);
-            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        }
+        movieService.deleteMovie(movieId);
+        resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
     }
 }

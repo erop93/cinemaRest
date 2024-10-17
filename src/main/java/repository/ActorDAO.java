@@ -20,7 +20,7 @@ public class ActorDAO {
      *
      * @return возвращает список всех актеров.
      */
-    public List<Actor> getAllActors() throws SQLException {
+    public List<Actor> getAllActors() {
         List<Actor> actors = new ArrayList<>();
         String query = "SELECT * FROM actors";
 
@@ -34,6 +34,9 @@ public class ActorDAO {
                 Actor actor = new Actor(actorId, actorName);
                 actors.add(actor);
             }
+        }  catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
         return actors;
     }
@@ -44,7 +47,7 @@ public class ActorDAO {
      * @param actorId - id актера.
      * @return возвращает актера
      */
-    public Actor getActorById(int actorId) throws SQLException {
+    public Actor getActorById(int actorId) {
         Actor actor = null;
         String query = "SELECT * FROM actors WHERE actor_id = ?";
 
@@ -57,6 +60,9 @@ public class ActorDAO {
                 String actorName = resultSet.getString("actor_name");
                 actor = new Actor(actorId, actorName);
             }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
         return actor;
     }
@@ -66,7 +72,7 @@ public class ActorDAO {
      *
      * @param actor - актер
      */
-    public void addActor(Actor actor) throws SQLException {
+    public void addActor(Actor actor) {
         String query = "INSERT INTO actors (actor_name) VALUES(?) RETURNING actor_id";
 
         try (Connection connection = DbConnection.getConnection();
@@ -77,6 +83,9 @@ public class ActorDAO {
                 int generatedId = resultSet.getInt(1);
                 actor.setActorId(generatedId);
             }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
     }
 
@@ -85,7 +94,7 @@ public class ActorDAO {
      *
      * @param actor - актер
      */
-    public void updateActor(Actor actor) throws SQLException {
+    public void updateActor(Actor actor) {
         String query = "UPDATE actors SET actor_name = ? WHERE actor_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
@@ -94,6 +103,9 @@ public class ActorDAO {
             preparedStatement.setString(1, actor.getActorName());
             preparedStatement.setInt(2, actor.getActorId());
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
     }
 
@@ -102,13 +114,16 @@ public class ActorDAO {
      *
      * @param actorId - id актера.
      */
-    public void deleteActor(int actorId) throws SQLException {
+    public void deleteActor(int actorId) {
         String query = "DELETE FROM actors WHERE actor_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, actorId);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL error!");
         }
     }
 }
