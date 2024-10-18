@@ -44,7 +44,7 @@ class GenreServletTest {
         when(response.getWriter()).thenReturn(printWriter);
 
         Genre genre = new Genre(1, "Drama");
-        when(genreService.getGenreById(1)).thenReturn(genre);
+        when(genreService.getById(1)).thenReturn(genre);
 
         genreServlet.doGet(request, response);
         printWriter.flush();
@@ -60,7 +60,7 @@ class GenreServletTest {
         when(request.getParameter("genreName")).thenReturn("Drama");
         genreServlet.doPost(request, response);
 
-        verify(genreService, times(1)).addGenre(any(Genre.class));
+        verify(genreService, times(1)).add(any(Genre.class));
         verify(response, times(1)).setStatus(HttpServletResponse.SC_CREATED);
     }
 
@@ -73,7 +73,7 @@ class GenreServletTest {
         when(request.getParameter("genreName")).thenReturn("UpdatedTest");
         genreServlet.doPut(request, response);
 
-        verify(genreService, times(1)).updateGenre(any(Genre.class));
+        verify(genreService, times(1)).update(any(Genre.class));
         verify(response, times(1)).setStatus(HttpServletResponse.SC_OK);
     }
 
@@ -85,7 +85,7 @@ class GenreServletTest {
         when(request.getParameter("id")).thenReturn("1");
         genreServlet.doDelete(request, response);
 
-        verify(genreService, times(1)).deleteGenre(1);
+        verify(genreService, times(1)).delete(1);
         verify(response, times(1)).setStatus(HttpServletResponse.SC_NO_CONTENT);
     }
 }

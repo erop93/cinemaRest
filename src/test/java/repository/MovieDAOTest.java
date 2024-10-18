@@ -15,52 +15,52 @@ class MovieDAOTest extends TestContainersTest {
     private GenreDAO genreDAO = new GenreDAO();
 
     @Test
-    void getAllMoviesTest() throws SQLException {
+    void getAllTest() throws SQLException {
         Genre genre = new Genre(0, "Drama");
-        genreDAO.addGenre(genre);
+        genreDAO.add(genre);
 
-        movieDAO.addMovie(new Movie(0, "Forrest Gump", genre));
-        movieDAO.addMovie(new Movie(0, "Interstellar", genre));
+        movieDAO.add(new Movie(0, "Forrest Gump", genre));
+        movieDAO.add(new Movie(0, "Interstellar", genre));
 
-        List<Movie> movies = movieDAO.getAllMovies();
+        List<Movie> movies = movieDAO.getAll();
         assertEquals(2, movies.size());
     }
 
     @Test
-    void addMovieTest() throws SQLException {
+    void addTest() throws SQLException {
         Genre genre = new Genre(0, "Drama");
-        genreDAO.addGenre(genre);
+        genreDAO.add(genre);
 
         Movie movie = new Movie(0, "Forrest Gump", genre);
-        movieDAO.addMovie(movie);
+        movieDAO.add(movie);
 
-        assertNotNull(movieDAO.getMovieById(movie.getMovieId()));
+        assertNotNull(movieDAO.getById(movie.getMovieId()));
     }
 
     @Test
-    void updateMovieTest() throws SQLException {
+    void updateTest() throws SQLException {
         Genre genre = new Genre(0, "Drama");
-        genreDAO.addGenre(genre);
+        genreDAO.add(genre);
 
         Movie movie = new Movie(0, "Forrest Gump", genre);
-        movieDAO.addMovie(movie);
+        movieDAO.add(movie);
 
         movie.setMovieName("Updated Name");
-        movieDAO.updateMovie(movie);
+        movieDAO.update(movie);
 
-        Movie updatedMovie = movieDAO.getMovieById(movie.getMovieId());
+        Movie updatedMovie = movieDAO.getById(movie.getMovieId());
         assertEquals("Updated Name", updatedMovie.getMovieName());
     }
 
     @Test
-    void deleteMovieTest() throws SQLException {
+    void deleteTest() throws SQLException {
         Genre genre = new Genre(0, "Drama");
-        genreDAO.addGenre(genre);
+        genreDAO.add(genre);
 
         Movie movie = new Movie(0, "Forrest Gump", genre);
-        movieDAO.addMovie(movie);
+        movieDAO.add(movie);
 
-        movieDAO.deleteMovie(movie.getMovieId());
-        assertNull(movieDAO.getMovieById(movie.getMovieId()));
+        movieDAO.delete(movie.getMovieId());
+        assertNull(movieDAO.getById(movie.getMovieId()));
     }
 }

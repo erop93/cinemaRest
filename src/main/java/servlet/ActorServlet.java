@@ -4,7 +4,6 @@ import entity.Actor;
 import repository.ActorDAO;
 import service.ActorService;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +46,7 @@ public class ActorServlet extends HttpServlet {
         if (idParam != null) {
             int actorId = Integer.parseInt(idParam);
             try {
-                Actor actor = actorService.getActorById(actorId);
+                Actor actor = actorService.getById(actorId);
                 if (actor != null) {
                     out.println("{ \"actorId\": " + actor.getActorId() + ", \"actorName\": \"" + actor.getActorName() + "\" }");
                 } else {
@@ -60,7 +59,7 @@ public class ActorServlet extends HttpServlet {
             }
         } else {
             try {
-                List<Actor> actors = actorService.getAllActors();
+                List<Actor> actors = actorService.getAll();
                 out.println("[");
                 for (int i = 0; i < actors.size(); i++) {
                     Actor actor = actors.get(i);
@@ -93,7 +92,7 @@ public class ActorServlet extends HttpServlet {
 
         try {
             Actor actor = new Actor(0, actorName);
-            actorService.addActor(actor);
+            actorService.add(actor);
             resp.setStatus(HttpServletResponse.SC_CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,7 +117,7 @@ public class ActorServlet extends HttpServlet {
 
         try {
             Actor actor = new Actor(actorId, actorName);
-            actorService.updateActor(actor);
+            actorService.update(actor);
             resp.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -147,7 +146,7 @@ public class ActorServlet extends HttpServlet {
         }
         try {
             int actorId = Integer.parseInt(actorIdParam);
-            actorService.deleteActorById(actorId);
+            actorService.delete(actorId);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } catch (NumberFormatException e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

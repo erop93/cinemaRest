@@ -29,35 +29,35 @@ class ActorServiceTest {
 
     }
     @Test
-    void getAllActorsTest() throws SQLException {
+    void getAllTest() throws SQLException {
         List<Actor> actors = Arrays.asList(
                 new Actor(1, "Leonardo DiCaprio"),
                 new Actor(2, "Bruce Willis")
         );
-        when(actorDAO.getAllActors()).thenReturn(actors);
-        List<Actor> result = actorService.getAllActors();
+        when(actorDAO.getAll()).thenReturn(actors);
+        List<Actor> result = actorService.getAll();
         assertEquals(2, result.size());
-        verify(actorDAO, times(1)).getAllActors();
+        verify(actorDAO, times(1)).getAll();
     }
 
     @Test
-    void addActorTest() throws SQLException {
+    void addTest() throws SQLException {
         Actor actor = new Actor(1, "Leonardo DiCaprio");
-        actorService.addActor(actor);
-        verify(actorDAO, times(1)).addActor(actor);
+        actorService.add(actor);
+        verify(actorDAO, times(1)).add(actor);
     }
 
     @Test
-    void updateActorTest() throws SQLException {
+    void updateTest() throws SQLException {
         Actor actor = new Actor(1, "Leonardo DiCaprio");
-        actorService.updateActor(actor);
-        verify(actorDAO, times(1)).updateActor(actor);
+        actorService.update(actor);
+        verify(actorDAO, times(1)).update(actor);
     }
 
     @Test
-    void deleteActorByIdTest() throws SQLException {
+    void deleteTest() throws SQLException {
         int actorId = 1;
-        actorService.deleteActorById(actorId);
-        verify(actorDAO, times(1)).deleteActor(actorId);
+        actorService.delete(actorId);
+        verify(actorDAO, times(1)).delete(actorId);
     }
 }

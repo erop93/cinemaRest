@@ -13,36 +13,36 @@ public class ActorDAOTest extends TestContainersTest {
     private ActorDAO actorDAO = new ActorDAO();
 
     @Test
-    void getAllActorsTest() throws SQLException {
-        actorDAO.addActor(new Actor(0,"Leonardo DiCaprio"));
-        actorDAO.addActor(new Actor(0, "Bruce Willis"));
-        List<Actor> actors = actorDAO.getAllActors();
+    void getAllTest() throws SQLException {
+        actorDAO.add(new Actor(0,"Leonardo DiCaprio"));
+        actorDAO.add(new Actor(0, "Bruce Willis"));
+        List<Actor> actors = actorDAO.getAll();
         assertEquals(2, actors.size());
     }
 
     @Test
-    void addActorTest() throws SQLException {
+    void addTest() throws SQLException {
         Actor actor = new Actor(0, "Leonardo DiCaprio");
-        actorDAO.addActor(actor);
-        assertNotNull(actorDAO.getActorById(actor.getActorId()));
+        actorDAO.add(actor);
+        assertNotNull(actorDAO.getById(actor.getActorId()));
     }
 
     @Test
-    void updateActorTest() throws SQLException {
+    void updateTest() throws SQLException {
         Actor actor = new Actor(0, "Leonardo DiCaprio");
-        actorDAO.addActor(actor);
+        actorDAO.add(actor);
         actor.setActorName("Updated Name");
-        actorDAO.updateActor(actor);
+        actorDAO.update(actor);
 
-        Actor updatedActor = actorDAO.getActorById(actor.getActorId());
+        Actor updatedActor = actorDAO.getById(actor.getActorId());
         assertEquals("Updated Name", updatedActor.getActorName());
     }
 
     @Test
-    void deleteActorTest() throws SQLException {
+    void deleteTest() throws SQLException {
         Actor actor = new Actor(0, "Leonardo DiCaprio");
-        actorDAO.addActor(actor);
-        actorDAO.deleteActor(actor.getActorId());
-        assertNull(actorDAO.getActorById(actor.getActorId()));
+        actorDAO.add(actor);
+        actorDAO.delete(actor.getActorId());
+        assertNull(actorDAO.getById(actor.getActorId()));
     }
 }

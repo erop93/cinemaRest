@@ -30,43 +30,43 @@ class MovieServiceTest {
     }
 
     @Test
-    void getAllMoviesTest() throws SQLException {
+    void getAllTest() throws SQLException {
         Genre genre = new Genre(1, "Drama");
         List<Movie> movies = Arrays.asList(
              new Movie(1, "Forrest Gump", genre),
              new Movie(2, "Interstellar", genre)
         );
 
-        when(movieDAO.getAllMovies()).thenReturn(movies);
+        when(movieDAO.getAll()).thenReturn(movies);
 
-        List<Movie> result = movieService.getAllMovies();
+        List<Movie> result = movieService.getAll();
         assertEquals(2, result.size());
-        verify(movieDAO, times(1)).getAllMovies();
+        verify(movieDAO, times(1)).getAll();
     }
 
     @Test
-    void addMovieTest() throws SQLException {
+    void addTest() throws SQLException {
         Genre genre = new Genre(1, "Drama");
         Movie movie = new Movie(1, "Forrest Gump", genre);
 
-        movieService.addMovie(movie);
-        verify(movieDAO, times(1)).addMovie(movie);
+        movieService.add(movie);
+        verify(movieDAO, times(1)).add(movie);
     }
 
     @Test
-    void updateMovieTest() throws SQLException {
+    void updateTest() throws SQLException {
         Genre genre = new Genre(1, "Drama");
         Movie movie = new Movie(1, "Forrest Gump", genre);
 
-        movieService.updateMovie(movie);
-        verify(movieDAO, times(1)).updateMovie(movie);
+        movieService.update(movie);
+        verify(movieDAO, times(1)).update(movie);
     }
 
     @Test
-    void deleteMovieTest() throws SQLException {
+    void deleteTest() throws SQLException {
         int movieId = 1;
 
-        movieService.deleteMovie(movieId);
-        verify(movieDAO, times(1)).deleteMovie(movieId);
+        movieService.delete(movieId);
+        verify(movieDAO, times(1)).delete(movieId);
     }
 }

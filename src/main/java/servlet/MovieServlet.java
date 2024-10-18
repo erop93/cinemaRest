@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -49,7 +48,7 @@ public class MovieServlet extends HttpServlet {
 
         if (idParam != null) {
             int movieId = Integer.parseInt(idParam);
-            Movie movie = movieService.getMovieById(movieId);
+            Movie movie = movieService.getById(movieId);
             if (movie != null) {
                 out.println("{ \"movieId\": " + movie.getMovieId() + ", \"movieName\": \"" + movie.getMovieName() + "\" }");
             } else {
@@ -57,7 +56,7 @@ public class MovieServlet extends HttpServlet {
                 out.println("{\"error\": \"Movie not found\"}");
             }
         } else {
-            List<Movie> movies = movieService.getAllMovies();
+            List<Movie> movies = movieService.getAll();
             out.println("[");
             for (int i = 0; i < movies.size(); i++) {
                 Movie movie = movies.get(i);
@@ -85,9 +84,9 @@ public class MovieServlet extends HttpServlet {
         String movieName = req.getParameter("movieName");
         int genreId = Integer.parseInt(req.getParameter("genreId"));
 
-        Genre genre = new GenreDAO().getGenreById(genreId);
+        Genre genre = new GenreDAO().getById(genreId);
         Movie movie = new Movie(0, movieName, genre);
-        movieService.addMovie(movie);
+        movieService.add(movie);
         resp.setStatus(HttpServletResponse.SC_CREATED);
     }
 
@@ -107,9 +106,9 @@ public class MovieServlet extends HttpServlet {
         String movieName = req.getParameter("movieName");
         int genreId = Integer.parseInt(req.getParameter("genreId"));
 
-        Genre genre = new GenreDAO().getGenreById(genreId);
+        Genre genre = new GenreDAO().getById(genreId);
         Movie movie = new Movie(movieId, movieName, genre);
-        movieService.updateMovie(movie);
+        movieService.update(movie);
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
@@ -127,7 +126,7 @@ public class MovieServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         int movieId = Integer.parseInt(req.getParameter("id"));
 
-        movieService.deleteMovie(movieId);
+        movieService.delete(movieId);
         resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
     }
 }

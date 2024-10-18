@@ -3,13 +3,12 @@ package service;
 import entity.Genre;
 import repository.GenreDAO;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Сервисный класс для класса Genre, в котором методы работают через экземпляр слоя репозитория GenreRepository.
  */
-public class GenreService {
+public class GenreService implements CrudService<Genre> {
 
     private final GenreDAO genreDAO;
 
@@ -17,23 +16,23 @@ public class GenreService {
         this.genreDAO = genreDAO;
     }
 
-    public List<Genre> getAllGenres() {
-        return genreDAO.getAllGenres();
+    public List<Genre> getAll() {
+        return genreDAO.getAll();
     }
 
-    public Genre getGenreById(int genreId) {
-        return genreDAO.getGenreById(genreId);
+    public Genre getById(int genreId) {
+        return genreDAO.getById(genreId);
     }
 
-    public void addGenre(Genre genre) {
-        genreDAO.addGenre(genre);
+    public void add(Genre genre) {
+        genreDAO.add(genre);
     }
 
-    public void updateGenre(Genre genre) {
-        genreDAO.updateGenre(genre);
+    public void update(Genre genre) {
+        genreDAO.update(genre);
     }
 
-    public void deleteGenre(int genreId) {
-        genreDAO.deleteGenre(genreId);
+    public void delete(int genreId) {
+        genreDAO.delete(genreId);
     }
 }

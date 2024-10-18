@@ -3,7 +3,6 @@ package service;
 import entity.Movie;
 import repository.MovieDAO;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -17,23 +16,23 @@ public class MovieService {
         this.movieDAO = movieDAO;
     }
 
-    public List<Movie> getAllMovies() {
-        return movieDAO.getAllMovies();
+    public List<Movie> getAll() {
+        return movieDAO.getAll();
     }
 
-    public Movie getMovieById(int movieId) {
-        return movieDAO.getMovieById(movieId);
+    public Movie getById(int movieId) {
+        return movieDAO.getById(movieId);
     }
 
-    public void addMovie(Movie movie) {
-        movieDAO.addMovie(movie);
+    public void add(Movie movie) {
+        movieDAO.add(movie);
     }
 
-    public void updateMovie(Movie movie)  {
-        movieDAO.updateMovie(movie);
+    public void update(Movie movie)  {
+        movieDAO.update(movie);
     }
 
-    public void deleteMovie(int movieId) {
-        movieDAO.deleteMovie(movieId);
+    public void delete(int movieId) {
+        movieDAO.delete(movieId);
     }
 }

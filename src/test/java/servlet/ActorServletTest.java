@@ -44,7 +44,7 @@ class ActorServletTest {
         when(response.getWriter()).thenReturn(printWriter);
 
         Actor actor = new Actor(1, "Leonardo DiCaprio");
-        when(actorService.getActorById(1)).thenReturn(actor);
+        when(actorService.getById(1)).thenReturn(actor);
 
         actorServlet.doGet(request, response);
         printWriter.flush();
@@ -60,7 +60,7 @@ class ActorServletTest {
         when(request.getParameter("actorName")).thenReturn("Leonardo DiCaprio");
         actorServlet.doPost(request, response);
 
-        verify(actorService, times(1)).addActor(any(Actor.class));
+        verify(actorService, times(1)).add(any(Actor.class));
         verify(response, times(1)).setStatus(HttpServletResponse.SC_CREATED);
     }
 
@@ -73,7 +73,7 @@ class ActorServletTest {
         when(request.getParameter("actorName")).thenReturn("Updated Name");
         actorServlet.doPut(request, response);
 
-        verify(actorService, times(1)).updateActor(any(Actor.class));
+        verify(actorService, times(1)).update(any(Actor.class));
         verify(response, times(1)).setStatus(HttpServletResponse.SC_OK);
     }
 
@@ -90,7 +90,7 @@ class ActorServletTest {
         when(response.getWriter()).thenReturn(printWriter);
         actorServlet.doDelete(request, response);
 
-        verify(actorService, times(0)).deleteActorById(anyInt());
+        verify(actorService, times(0)).delete(anyInt());
         verify(response, times(1)).setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
         printWriter.flush();

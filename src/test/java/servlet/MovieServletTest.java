@@ -46,7 +46,7 @@ class MovieServletTest {
 
         Genre genre = new Genre(1, "Drama");
         Movie movie = new Movie(1, "Forrest Gump", genre);
-        when(movieService.getMovieById(1)).thenReturn(movie);
+        when(movieService.getById(1)).thenReturn(movie);
 
         movieServlet.doGet(request, response);
         printWriter.flush();
@@ -64,7 +64,7 @@ class MovieServletTest {
 
         movieServlet.doPost(request, response);
 
-        verify(movieService, times(1)).addMovie(any(Movie.class));
+        verify(movieService, times(1)).add(any(Movie.class));
         verify(response, times(1)).setStatus(HttpServletResponse.SC_CREATED);
     }
 
@@ -79,7 +79,7 @@ class MovieServletTest {
 
         movieServlet.doPut(request, response);
 
-        verify(movieService, times(1)).updateMovie(any(Movie.class));
+        verify(movieService, times(1)).update(any(Movie.class));
         verify(response, times(1)).setStatus(HttpServletResponse.SC_OK);
     }
 
@@ -92,7 +92,7 @@ class MovieServletTest {
 
         movieServlet.doDelete(request, response);
 
-        verify(movieService, times(1)).deleteMovie(1);
+        verify(movieService, times(1)).delete(1);
         verify(response, times(1)).setStatus(HttpServletResponse.SC_NO_CONTENT);
     }
 }

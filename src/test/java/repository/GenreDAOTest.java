@@ -13,37 +13,37 @@ class GenreDAOTest extends TestContainersTest {
     private GenreDAO genreDAO = new GenreDAO();
 
     @Test
-    void getAllGenresTest() throws SQLException {
-        genreDAO.addGenre(new Genre(0, "Drama"));
-        genreDAO.addGenre(new Genre(1, "Horror"));
-        List<Genre> genres = genreDAO.getAllGenres();
+    void getAllTest() throws SQLException {
+        genreDAO.add(new Genre(0, "Drama"));
+        genreDAO.add(new Genre(1, "Horror"));
+        List<Genre> genres = genreDAO.getAll();
         assertEquals(2, genres.size());
     }
 
     @Test
-    void addGenreTest() throws SQLException {
+    void addTest() throws SQLException {
         Genre genre = new Genre(0, "Drama");
-        genreDAO.addGenre(genre);
-        assertNotNull(genreDAO.getGenreById(genre.getGenreId()));
+        genreDAO.add(genre);
+        assertNotNull(genreDAO.getById(genre.getGenreId()));
     }
 
     @Test
-    void updateGenreTest() throws SQLException {
+    void updateTest() throws SQLException {
         Genre genre = new Genre(0, "Drama");
-        genreDAO.addGenre(genre);
+        genreDAO.add(genre);
 
         genre.setGenreName("New Genre");
-        genreDAO.updateGenre(genre);
+        genreDAO.update(genre);
 
-        Genre updatedGenre = genreDAO.getGenreById(genre.getGenreId());
+        Genre updatedGenre = genreDAO.getById(genre.getGenreId());
         assertEquals("New Genre", updatedGenre.getGenreName());
     }
 
     @Test
-    void deleteGenreTest() throws SQLException {
+    void deleteTest() throws SQLException {
         Genre genre = new Genre(0, "Drama");
-        genreDAO.addGenre(genre);
-        genreDAO.deleteGenre(genre.getGenreId());
-        assertNull(genreDAO.getGenreById(genre.getGenreId()));
+        genreDAO.add(genre);
+        genreDAO.delete(genre.getGenreId());
+        assertNull(genreDAO.getById(genre.getGenreId()));
     }
 }

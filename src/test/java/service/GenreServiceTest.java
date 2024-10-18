@@ -29,35 +29,35 @@ class GenreServiceTest {
     }
 
     @Test
-    void getAllGenresTest() throws SQLException {
+    void getAllTest() throws SQLException {
         List<Genre> genres = Arrays.asList(
                 new Genre(1, "Drama"),
                 new Genre(2, "Horror")
         );
-        when(genreDAO.getAllGenres()).thenReturn(genres);
-        List<Genre> result = genreService.getAllGenres();
+        when(genreDAO.getAll()).thenReturn(genres);
+        List<Genre> result = genreService.getAll();
         assertEquals(2, result.size());
-        verify(genreDAO, times(1)).getAllGenres();
+        verify(genreDAO, times(1)).getAll();
     }
 
     @Test
-    void addGenreTest() throws SQLException {
+    void addTest() throws SQLException {
         Genre genre = new Genre(1, "Drama");
-        genreService.addGenre(genre);
-        verify(genreDAO, times(1)).addGenre(genre);
+        genreService.add(genre);
+        verify(genreDAO, times(1)).add(genre);
     }
 
     @Test
-    void updateGenreTest() throws SQLException {
+    void updateTest() throws SQLException {
         Genre genre = new Genre(1, "Drama");
-        genreService.updateGenre(genre);
-        verify(genreDAO, times(1)).updateGenre(genre);
+        genreService.update(genre);
+        verify(genreDAO, times(1)).update(genre);
     }
 
     @Test
-    void deleteGenreTest() throws SQLException {
+    void deleteTest() throws SQLException {
         int genreId = 1;
-        genreService.deleteGenre(genreId);
-        verify(genreDAO, times(1)).deleteGenre(genreId);
+        genreService.delete(genreId);
+        verify(genreDAO, times(1)).delete(genreId);
     }
 }

@@ -47,7 +47,7 @@ public class GenreServlet extends HttpServlet {
         if (idParam != null) {
             int genreId = Integer.parseInt(idParam);
             try {
-                Genre genre = genreService.getGenreById(genreId);
+                Genre genre = genreService.getById(genreId);
                 if (genre != null) {
                     out.println("{ \"genreId\": " + genre.getGenreId() + ", \"genreName\": \"" + genre.getGenreName() + "\" }");
                 } else {
@@ -60,7 +60,7 @@ public class GenreServlet extends HttpServlet {
             }
         } else {
             try {
-                List<Genre> genres = genreService.getAllGenres();
+                List<Genre> genres = genreService.getAll();
                 out.println("[");
                 for (int i = 0; i < genres.size(); i++) {
                     Genre genre = genres.get(i);
@@ -93,7 +93,7 @@ public class GenreServlet extends HttpServlet {
 
         try {
             Genre genre = new Genre(0, genreName);
-            genreService.addGenre(genre);
+            genreService.add(genre);
             resp.setStatus(HttpServletResponse.SC_CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,7 +118,7 @@ public class GenreServlet extends HttpServlet {
 
         try {
             Genre genre = new Genre(genreId, genreName);
-            genreService.updateGenre(genre);
+            genreService.update(genre);
             resp.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,7 +141,7 @@ public class GenreServlet extends HttpServlet {
         int genreId = Integer.parseInt(req.getParameter("id"));
 
         try {
-            genreService.deleteGenre(genreId);
+            genreService.delete(genreId);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } catch (Exception e) {
             e.printStackTrace();

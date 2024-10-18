@@ -13,14 +13,14 @@ import java.util.List;
 /**
  * Репозиторий для сущности Actor с реализацией CRUD методов.
  */
-public class ActorDAO {
+public class ActorDAO implements CrudDAO<Actor> {
 
     /**
      * Метод для получения всех актеров.
      *
      * @return возвращает список всех актеров.
      */
-    public List<Actor> getAllActors() {
+    public List<Actor> getAll() {
         List<Actor> actors = new ArrayList<>();
         String query = "SELECT * FROM actors";
 
@@ -47,7 +47,7 @@ public class ActorDAO {
      * @param actorId - id актера.
      * @return возвращает актера
      */
-    public Actor getActorById(int actorId) {
+    public Actor getById(int actorId) {
         Actor actor = null;
         String query = "SELECT * FROM actors WHERE actor_id = ?";
 
@@ -72,7 +72,7 @@ public class ActorDAO {
      *
      * @param actor - актер
      */
-    public void addActor(Actor actor) {
+    public void add(Actor actor) {
         String query = "INSERT INTO actors (actor_name) VALUES(?) RETURNING actor_id";
 
         try (Connection connection = DbConnection.getConnection();
@@ -94,7 +94,7 @@ public class ActorDAO {
      *
      * @param actor - актер
      */
-    public void updateActor(Actor actor) {
+    public void update(Actor actor) {
         String query = "UPDATE actors SET actor_name = ? WHERE actor_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
@@ -114,7 +114,7 @@ public class ActorDAO {
      *
      * @param actorId - id актера.
      */
-    public void deleteActor(int actorId) {
+    public void delete(int actorId) {
         String query = "DELETE FROM actors WHERE actor_id = ?";
 
         try (Connection connection = DbConnection.getConnection();

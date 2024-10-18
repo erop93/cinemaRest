@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * Репозиторий для сущности Movie с реализацией CRUD методов.
  */
-public class MovieDAO {
+public class MovieDAO implements CrudDAO<Movie> {
 
     /**
      * Метод для получения всех фильмов.
      *
      * @return возвращает список всех фильмов.
      */
-    public List<Movie> getAllMovies() {
+    public List<Movie> getAll() {
         List<Movie> movies = new ArrayList<>();
         String query = "SELECT * FROM movies";
 
@@ -31,7 +31,7 @@ public class MovieDAO {
                 int movieId = resultSet.getInt("movie_id");
                 String movieName = resultSet.getString("movie_name");
                 int genreId = resultSet.getInt("genre_id");
-                Genre genre = new GenreDAO().getGenreById(genreId);
+                Genre genre = new GenreDAO().getById(genreId);
                 Movie movie = new Movie(movieId, movieName, genre);
 
                 List<Actor> actors = getActorsForMovie(movieId);
@@ -51,7 +51,7 @@ public class MovieDAO {
      * @param movieId - id фильма.
      * @return возвращает фильм
      */
-    public Movie getMovieById(int movieId) {
+    public Movie getById(int movieId) {
         Movie movie = null;
         String query = "SELECT * FROM movies WHERE movie_id = ?";
 
@@ -64,7 +64,7 @@ public class MovieDAO {
             if (resultSet.next()) {
                 String movieName = resultSet.getString("movie_name");
                 int genreId = resultSet.getInt("genre_id");
-                Genre genre = new GenreDAO().getGenreById(genreId);
+                Genre genre = new GenreDAO().getById(genreId);
 
                 movie = new Movie(movieId, movieName, genre);
 
@@ -82,7 +82,7 @@ public class MovieDAO {
      * Метод для добавления фильма.
      * @param movie - фильм
      */
-    public void addMovie(Movie movie) {
+    public void add(Movie movie) {
         String query = "INSERT INTO movies (movie_name, genre_id) VALUES (?, ?)";
 
         try (Connection connection = DbConnection.getConnection();
@@ -107,7 +107,7 @@ public class MovieDAO {
      * Метод для обновления данных фильма - названия и жанра.
      * @param movie - фильм.
      */
-    public void updateMovie(Movie movie) {
+    public void update(Movie movie) {
         String query = "UPDATE movies SET movie_name = ?, genre_id = ? WHERE movie_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
@@ -131,7 +131,7 @@ public class MovieDAO {
      * Сначала удаляем связи актеров с фильмом с помощью метода deleteActorsForMovie, а затем и сам фильм.
      * @param movieId - id фильма
      */
-    public void deleteMovie(int movieId) {
+    public void delete(int movieId) {
         deleteActorsForMovie(movieId);
         String query = "DELETE FROM movies WHERE movie_id = ?";
 

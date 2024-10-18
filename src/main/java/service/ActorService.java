@@ -3,13 +3,12 @@ package service;
 import entity.Actor;
 import repository.ActorDAO;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Сервисный класс для класса Actor, в котором методы работают через экземпляр слоя репозитория ActorRepository.
  */
-public class ActorService {
+public class ActorService implements CrudService<Actor> {
     private final ActorDAO actorDAO;
 
     public ActorService(ActorDAO actorDAO) {
@@ -17,23 +16,23 @@ public class ActorService {
     }
 
 
-    public List<Actor> getAllActors() {
-        return actorDAO.getAllActors();
+    public List<Actor> getAll() {
+        return actorDAO.getAll();
     }
 
-    public Actor getActorById(int actorId) {
-        return actorDAO.getActorById(actorId);
+    public Actor getById(int actorId) {
+        return actorDAO.getById(actorId);
     }
 
-    public void addActor(Actor actor) {
-        actorDAO.addActor(actor);
+    public void add(Actor actor) {
+        actorDAO.add(actor);
     }
 
-    public void updateActor(Actor actor) {
-        actorDAO.updateActor(actor);
+    public void update(Actor actor) {
+        actorDAO.update(actor);
     }
 
-    public void deleteActorById(int actorId) {
-        actorDAO.deleteActor(actorId);
+    public void delete(int actorId) {
+        actorDAO.delete(actorId);
     }
 }

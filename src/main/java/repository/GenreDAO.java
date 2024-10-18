@@ -13,14 +13,14 @@ import java.util.List;
 /**
  * Репозиторий для сущности Genre с реализацией CRUD методов.
  */
-public class GenreDAO {
+public class GenreDAO implements CrudDAO<Genre> {
 
     /**
      * Метод для получения всех жанров.
      *
      * @return возвращает список всех жанров.
      */
-    public List<Genre> getAllGenres() {
+    public List<Genre> getAll() {
         List<Genre> genres = new ArrayList<>();
         String query = "SELECT * FROM genres";
 
@@ -47,7 +47,7 @@ public class GenreDAO {
      * @param genreId - id жанра
      * @return возвращает жанр.
      */
-    public Genre getGenreById(int genreId) {
+    public Genre getById(int genreId) {
         Genre genre = null;
         String query = "SELECT * FROM genres WHERE genre_id = ?";
 
@@ -73,7 +73,7 @@ public class GenreDAO {
      *
      * @param genre - жанр.
      */
-    public void addGenre(Genre genre) {
+    public void add(Genre genre) {
         String query = "INSERT INTO genres (genre_name) VALUES (?) RETURNING genre_id";
 
         try (Connection connection = DbConnection.getConnection();
@@ -96,7 +96,7 @@ public class GenreDAO {
      *
      * @param genre - жанр.
      */
-    public void updateGenre(Genre genre) {
+    public void update(Genre genre) {
         String query = "UPDATE genres SET genre_name = ? WHERE genre_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
@@ -116,7 +116,7 @@ public class GenreDAO {
      *
      * @param genreId - id жанра.
      */
-    public void deleteGenre(int genreId) {
+    public void delete(int genreId) {
         String query = "DELETE FROM genres WHERE genre_id = ?";
 
         try (Connection connection = DbConnection.getConnection();
