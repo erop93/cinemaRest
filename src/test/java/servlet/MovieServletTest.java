@@ -35,7 +35,7 @@ class MovieServletTest {
     }
 
     @Test
-    void doGetMovieByIdTest() throws IOException, SQLException, ServletException {
+    void doGetMovieByIdTest() throws IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         StringWriter stringWriter = new StringWriter();
@@ -55,7 +55,7 @@ class MovieServletTest {
     }
 
     @Test
-    void doPostAddMovieTest() throws ServletException, IOException, SQLException {
+    void doPostAddMovieTest() {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -64,12 +64,12 @@ class MovieServletTest {
 
         movieServlet.doPost(request, response);
 
-        verify(movieService, times(1)).add(any(Movie.class));
-        verify(response, times(1)).setStatus(HttpServletResponse.SC_CREATED);
+        verify(movieService).add(any(Movie.class));
+        verify(response).setStatus(HttpServletResponse.SC_CREATED);
     }
 
     @Test
-    void doPutUpdateMovieTest() throws ServletException, IOException, SQLException {
+    void doPutUpdateMovieTest() {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -79,12 +79,12 @@ class MovieServletTest {
 
         movieServlet.doPut(request, response);
 
-        verify(movieService, times(1)).update(any(Movie.class));
-        verify(response, times(1)).setStatus(HttpServletResponse.SC_OK);
+        verify(movieService).update(any(Movie.class));
+        verify(response).setStatus(HttpServletResponse.SC_OK);
     }
 
     @Test
-    void doDeleteMovieTest() throws ServletException, IOException, SQLException {
+    void doDeleteMovieTest() {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -92,7 +92,7 @@ class MovieServletTest {
 
         movieServlet.doDelete(request, response);
 
-        verify(movieService, times(1)).delete(1);
-        verify(response, times(1)).setStatus(HttpServletResponse.SC_NO_CONTENT);
+        verify(movieService).delete(1);
+        verify(response).setStatus(HttpServletResponse.SC_NO_CONTENT);
     }
 }

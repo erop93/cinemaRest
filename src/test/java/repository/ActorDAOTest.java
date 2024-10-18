@@ -1,19 +1,25 @@
 package repository;
 
 import entity.Actor;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class ActorDAOTest extends TestContainersTest {
 
     private ActorDAO actorDAO = new ActorDAO();
+    private Actor actor;
+
+    @BeforeEach
+    public void setUp() {
+        actor = new Actor(0, "Leonardo DiCaprio");
+    }
 
     @Test
-    void getAllTest() throws SQLException {
+    void getAllActorsTest() {
         actorDAO.add(new Actor(0,"Leonardo DiCaprio"));
         actorDAO.add(new Actor(0, "Bruce Willis"));
         List<Actor> actors = actorDAO.getAll();
@@ -21,15 +27,13 @@ public class ActorDAOTest extends TestContainersTest {
     }
 
     @Test
-    void addTest() throws SQLException {
-        Actor actor = new Actor(0, "Leonardo DiCaprio");
+    void addActorTest() {
         actorDAO.add(actor);
         assertNotNull(actorDAO.getById(actor.getActorId()));
     }
 
     @Test
-    void updateTest() throws SQLException {
-        Actor actor = new Actor(0, "Leonardo DiCaprio");
+    void updateActorTest() {
         actorDAO.add(actor);
         actor.setActorName("Updated Name");
         actorDAO.update(actor);
@@ -39,8 +43,7 @@ public class ActorDAOTest extends TestContainersTest {
     }
 
     @Test
-    void deleteTest() throws SQLException {
-        Actor actor = new Actor(0, "Leonardo DiCaprio");
+    void deleteActorTest() {
         actorDAO.add(actor);
         actorDAO.delete(actor.getActorId());
         assertNull(actorDAO.getById(actor.getActorId()));

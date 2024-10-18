@@ -34,7 +34,7 @@ class ActorServletTest {
     }
 
     @Test
-    public void doGetActorByIdTest() throws IOException, SQLException, ServletException {
+    public void doGetActorByIdTest() throws IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         StringWriter stringWriter = new StringWriter();
@@ -53,19 +53,19 @@ class ActorServletTest {
     }
 
     @Test
-    public void doPostAddActorTest() throws IOException, SQLException, ServletException {
+    public void doPostAddActorTest() {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getParameter("actorName")).thenReturn("Leonardo DiCaprio");
         actorServlet.doPost(request, response);
 
-        verify(actorService, times(1)).add(any(Actor.class));
-        verify(response, times(1)).setStatus(HttpServletResponse.SC_CREATED);
+        verify(actorService).add(any(Actor.class));
+        verify(response).setStatus(HttpServletResponse.SC_CREATED);
     }
 
     @Test
-    public void doPutUpdateActorTest() throws IOException, SQLException, ServletException {
+    public void doPutUpdateActorTest() {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -73,12 +73,12 @@ class ActorServletTest {
         when(request.getParameter("actorName")).thenReturn("Updated Name");
         actorServlet.doPut(request, response);
 
-        verify(actorService, times(1)).update(any(Actor.class));
-        verify(response, times(1)).setStatus(HttpServletResponse.SC_OK);
+        verify(actorService).update(any(Actor.class));
+        verify(response).setStatus(HttpServletResponse.SC_OK);
     }
 
     @Test
-    public void doDeleteActorTest() throws IOException, SQLException, ServletException {
+    public void doDeleteActorTest() throws IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 

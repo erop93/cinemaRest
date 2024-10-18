@@ -37,27 +37,27 @@ class GenreServiceTest {
         when(genreDAO.getAll()).thenReturn(genres);
         List<Genre> result = genreService.getAll();
         assertEquals(2, result.size());
-        verify(genreDAO, times(1)).getAll();
+        verify(genreDAO).getAll();
     }
 
     @Test
     void addTest() throws SQLException {
         Genre genre = new Genre(1, "Drama");
         genreService.add(genre);
-        verify(genreDAO, times(1)).add(genre);
+        verify(genreDAO).add(genre);
     }
 
     @Test
     void updateTest() throws SQLException {
         Genre genre = new Genre(1, "Drama");
         genreService.update(genre);
-        verify(genreDAO, times(1)).update(genre);
+        verify(genreDAO).update(genre);
     }
 
     @Test
     void deleteTest() throws SQLException {
         int genreId = 1;
         genreService.delete(genreId);
-        verify(genreDAO, times(1)).delete(genreId);
+        verify(genreDAO).delete(genreId);
     }
 }

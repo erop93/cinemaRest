@@ -37,27 +37,27 @@ class ActorServiceTest {
         when(actorDAO.getAll()).thenReturn(actors);
         List<Actor> result = actorService.getAll();
         assertEquals(2, result.size());
-        verify(actorDAO, times(1)).getAll();
+        verify(actorDAO).getAll();
     }
 
     @Test
     void addTest() throws SQLException {
         Actor actor = new Actor(1, "Leonardo DiCaprio");
         actorService.add(actor);
-        verify(actorDAO, times(1)).add(actor);
+        verify(actorDAO).add(actor);
     }
 
     @Test
     void updateTest() throws SQLException {
         Actor actor = new Actor(1, "Leonardo DiCaprio");
         actorService.update(actor);
-        verify(actorDAO, times(1)).update(actor);
+        verify(actorDAO).update(actor);
     }
 
     @Test
     void deleteTest() throws SQLException {
         int actorId = 1;
         actorService.delete(actorId);
-        verify(actorDAO, times(1)).delete(actorId);
+        verify(actorDAO).delete(actorId);
     }
 }

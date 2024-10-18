@@ -34,7 +34,7 @@ class GenreServletTest {
     }
 
     @Test
-    void doGetGenreByIdTest() throws IOException, SQLException, ServletException {
+    void doGetGenreByIdTest() throws IOException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         StringWriter stringWriter = new StringWriter();
@@ -53,19 +53,19 @@ class GenreServletTest {
     }
 
     @Test
-    void doPostAddGenreTest() throws IOException, SQLException, ServletException {
+    void doPostAddGenreTest() {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getParameter("genreName")).thenReturn("Drama");
         genreServlet.doPost(request, response);
 
-        verify(genreService, times(1)).add(any(Genre.class));
-        verify(response, times(1)).setStatus(HttpServletResponse.SC_CREATED);
+        verify(genreService).add(any(Genre.class));
+        verify(response).setStatus(HttpServletResponse.SC_CREATED);
     }
 
     @Test
-    void doPutUpdateGenreTest() throws IOException, SQLException, ServletException {
+    void doPutUpdateGenreTest() {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -73,19 +73,19 @@ class GenreServletTest {
         when(request.getParameter("genreName")).thenReturn("UpdatedTest");
         genreServlet.doPut(request, response);
 
-        verify(genreService, times(1)).update(any(Genre.class));
-        verify(response, times(1)).setStatus(HttpServletResponse.SC_OK);
+        verify(genreService).update(any(Genre.class));
+        verify(response).setStatus(HttpServletResponse.SC_OK);
     }
 
     @Test
-    void doDeleteGenreTest() throws IOException, SQLException, ServletException {
+    void doDeleteGenreTest() {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         when(request.getParameter("id")).thenReturn("1");
         genreServlet.doDelete(request, response);
 
-        verify(genreService, times(1)).delete(1);
-        verify(response, times(1)).setStatus(HttpServletResponse.SC_NO_CONTENT);
+        verify(genreService).delete(1);
+        verify(response).setStatus(HttpServletResponse.SC_NO_CONTENT);
     }
 }

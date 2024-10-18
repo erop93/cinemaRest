@@ -41,7 +41,7 @@ class MovieServiceTest {
 
         List<Movie> result = movieService.getAll();
         assertEquals(2, result.size());
-        verify(movieDAO, times(1)).getAll();
+        verify(movieDAO).getAll();
     }
 
     @Test
@@ -50,7 +50,7 @@ class MovieServiceTest {
         Movie movie = new Movie(1, "Forrest Gump", genre);
 
         movieService.add(movie);
-        verify(movieDAO, times(1)).add(movie);
+        verify(movieDAO).add(movie);
     }
 
     @Test
@@ -59,7 +59,7 @@ class MovieServiceTest {
         Movie movie = new Movie(1, "Forrest Gump", genre);
 
         movieService.update(movie);
-        verify(movieDAO, times(1)).update(movie);
+        verify(movieDAO).update(movie);
     }
 
     @Test
@@ -67,6 +67,6 @@ class MovieServiceTest {
         int movieId = 1;
 
         movieService.delete(movieId);
-        verify(movieDAO, times(1)).delete(movieId);
+        verify(movieDAO).delete(movieId);
     }
 }

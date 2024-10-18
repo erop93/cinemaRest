@@ -2,6 +2,7 @@ package repository;
 
 import entity.Genre;
 import entity.Movie;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -13,10 +14,17 @@ class MovieDAOTest extends TestContainersTest {
 
     private MovieDAO movieDAO = new MovieDAO();
     private GenreDAO genreDAO = new GenreDAO();
+    private Genre genre;
+    private Movie movie;
+
+    @BeforeEach
+    public void setUp() {
+        genre = new Genre(0, "Drama");
+        movie = new Movie(0, "Forrest Gump", genre);
+    }
 
     @Test
-    void getAllTest() throws SQLException {
-        Genre genre = new Genre(0, "Drama");
+    void getAllMoviesTest() {;
         genreDAO.add(genre);
 
         movieDAO.add(new Movie(0, "Forrest Gump", genre));
@@ -27,22 +35,16 @@ class MovieDAOTest extends TestContainersTest {
     }
 
     @Test
-    void addTest() throws SQLException {
-        Genre genre = new Genre(0, "Drama");
+    void addMovieTest() {
         genreDAO.add(genre);
-
-        Movie movie = new Movie(0, "Forrest Gump", genre);
         movieDAO.add(movie);
 
         assertNotNull(movieDAO.getById(movie.getMovieId()));
     }
 
     @Test
-    void updateTest() throws SQLException {
-        Genre genre = new Genre(0, "Drama");
+    void updateMovieTest() {
         genreDAO.add(genre);
-
-        Movie movie = new Movie(0, "Forrest Gump", genre);
         movieDAO.add(movie);
 
         movie.setMovieName("Updated Name");
@@ -53,11 +55,8 @@ class MovieDAOTest extends TestContainersTest {
     }
 
     @Test
-    void deleteTest() throws SQLException {
-        Genre genre = new Genre(0, "Drama");
+    void deleteMovieTest() {
         genreDAO.add(genre);
-
-        Movie movie = new Movie(0, "Forrest Gump", genre);
         movieDAO.add(movie);
 
         movieDAO.delete(movie.getMovieId());
