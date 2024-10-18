@@ -21,7 +21,7 @@ import java.util.Properties;
 @Testcontainers
 public abstract class TestContainersTest {
 
-    private static final String PROPERTIES_FILE = "application.properties";
+    private static final String PROPERTIES_FILE = "test.properties";
     private static String url;
     private static String user;
     private static String password;
@@ -43,7 +43,8 @@ public abstract class TestContainersTest {
      * Данные для подключения к БД Постгрес.
      */
     @Container
-    public PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:17.0")
+    public PostgreSQLContainer<?> postgreSQLContainer =
+            new PostgreSQLContainer<>("postgres:17.0")
             .withDatabaseName(url)
             .withUsername(user)
             .withPassword(password);
